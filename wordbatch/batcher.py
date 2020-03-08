@@ -222,7 +222,7 @@ class Batcher(object):
 				results= list(pool.map(task, paral_params))
 			elif backend == "dask":
 				###if not (input_split):  data= self.scatter(data)
-				results = [self.backend_handle.submit(task, params) for params in paral_params]
+				results = self.backend_handle.map(task, paral_params)
 			elif backend == "spark":
 				def apply_func_to_indexedrdd(batch):
 					return [batch[0]] + [task([batch[1]] + args)]
